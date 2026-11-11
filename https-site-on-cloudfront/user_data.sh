@@ -56,7 +56,7 @@ dt{color:var(--mut)}
 dd{font-weight:600;overflow-wrap:anywhere}
 .src{font-size:13px;color:var(--mut);margin-top:16px}
 .series{margin-top:18px}
-ol{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;counter-reset:t}
+ol{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;counter-reset:t}
 li{position:relative;border:1px solid var(--line);border-radius:12px;padding:16px 14px 14px;counter-increment:t}
 li::before{content:"0" counter(t);display:block;font-size:24px;font-weight:750;color:rgba(148,163,184,.45);margin-bottom:4px}
 li b{display:block;margin-bottom:4px}
@@ -111,7 +111,8 @@ footer{margin-top:34px;font-size:13px;color:var(--mut)}
     <ol>
       <li><b>Desenhar</b><p>Uma VPC com uma instância EC2, compilada em código Terraform.</p></li>
       <li><b>Aplicar</b><p>O código vai para a conta AWS por GitOps, com Plan e Apply.</p></li>
-      <li class="here"><em>Este vídeo</em><b>Mudar e destruir</b><p>Este site, a porta 80 e o CloudFront com https. No fim, o Destroy apaga tudo da conta.</p></li>
+      <li><b>O desenho</b><p>Este site, a porta 80, um IP fixo e o CloudFront com https.</p></li>
+      <li class="here"><em>Este vídeo</em><b>Do Apply ao Destroy</b><p>O Apply cria tudo na conta AWS, e o Destroy apaga.</p></li>
     </ol>
   </section>
 
@@ -121,7 +122,7 @@ footer{margin-top:34px;font-size:13px;color:var(--mut)}
 function show(https, host) {
   var ip = /^\d{1,3}(\.\d{1,3}){3}$/.test(host), $ = function (id) { return document.getElementById(id); };
   $('midKind').textContent = https ? 'https' : 'http';
-  $('midName').textContent = https ? 'CloudFront' : (ip ? 'IP público' : 'DNS público');
+  $('midName').textContent = https ? 'CloudFront' : (ip ? 'Elastic IP' : 'DNS público');
   $('badge').className = 'badge ' + (https ? 'ok' : 'warn');
   $('badge').textContent = https ? 'Conexão criptografada, certificado do ACM' : 'Conexão sem criptografia';
   $('note').textContent = https
@@ -138,8 +139,8 @@ PAGE
 sed -i -e "s|{{INSTANCE_ID}}|${INSTANCE_ID:--}|" -e "s|{{INSTANCE_TYPE}}|${INSTANCE_TYPE:--}|" \
   -e "s|{{AZ}}|${AZ:--}|" -e "s|{{REGION}}|${REGION:--}|" -e "s|{{BOOTED}}|$BOOTED|" "$SITE/index.html"
 
-# The package repositories need internet access. The public address can arrive a few
-# seconds after the boot, so wait for it, for up to 5 minutes.
+# The package repositories need internet access. With an Elastic IP, the public address
+# can arrive a few seconds after the boot, so wait for it, for up to 5 minutes.
 for _ in $(seq 1 60); do
   curl -s -o /dev/null -m 5 https://checkip.amazonaws.com && break
   sleep 5
