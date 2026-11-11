@@ -1,0 +1,2 @@
+# The boot script runs on Linux: a CRLF line ending breaks it.
+* text=auto eol=lf
