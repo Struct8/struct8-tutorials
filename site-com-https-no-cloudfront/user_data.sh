@@ -1,5 +1,5 @@
 #!/bin/bash
-# Boot script of the site of the Struct8 tutorial "Mudar o desenho e destruir".
+# Boot script of the site of the Struct8 tutorial "Site com HTTPS no CloudFront".
 # EC2 runs it once, at the instance's first boot. It writes the page below, with the
 # instance's own facts, and serves it on port 80. Output: /var/log/cloud-init-output.log
 set -u

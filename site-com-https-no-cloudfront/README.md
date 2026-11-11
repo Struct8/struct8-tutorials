@@ -1,13 +1,13 @@
-# Mudar o desenho e destruir: o site da instância EC2
+# Site com HTTPS no CloudFront: o script de boot da instância EC2
 
-Esta pasta guarda o script de boot do vídeo "Mudar o desenho e destruir", da série Tutoriais do
-Struct8. O script publica um site na instância EC2 do desenho.
+Esta pasta guarda o script de boot do vídeo "Site com HTTPS no CloudFront, do Apply ao Destroy,
+no Struct8", da série Tutoriais do Struct8. O script publica um site na instância EC2 do desenho.
 
 ## Como o desenho usa esta pasta
 
 No diagrama do Struct8, o componente GitHub aponta para este repositório, e a instância EC2
 ligada a ele usa o script como user data. O campo User Data File Path da instância recebe
-`mudar-o-desenho-e-destruir/user_data.sh`, e o Apply cria a instância com ele.
+`site-com-https-no-cloudfront/user_data.sh`, e o Apply cria a instância com ele.
 
 ## O que o script faz
 
