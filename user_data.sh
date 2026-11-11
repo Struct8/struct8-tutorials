@@ -111,7 +111,7 @@ footer{margin-top:34px;font-size:13px;color:var(--mut)}
     <ol>
       <li><b>Desenhar</b><p>Uma VPC com uma instância EC2, compilada em código Terraform.</p></li>
       <li><b>Aplicar</b><p>O código vai para a conta AWS por GitOps, com Plan e Apply.</p></li>
-      <li class="here"><em>Este vídeo</em><b>Mudar e destruir</b><p>Este site, a porta 80, um Elastic IP e o CloudFront com https. No fim, o Destroy apaga tudo da conta.</p></li>
+      <li class="here"><em>Este vídeo</em><b>Mudar e destruir</b><p>Este site, a porta 80 e o CloudFront com https. No fim, o Destroy apaga tudo da conta.</p></li>
     </ol>
   </section>
 
@@ -121,7 +121,7 @@ footer{margin-top:34px;font-size:13px;color:var(--mut)}
 function show(https, host) {
   var ip = /^\d{1,3}(\.\d{1,3}){3}$/.test(host), $ = function (id) { return document.getElementById(id); };
   $('midKind').textContent = https ? 'https' : 'http';
-  $('midName').textContent = https ? 'CloudFront' : (ip ? 'Elastic IP' : 'DNS público');
+  $('midName').textContent = https ? 'CloudFront' : (ip ? 'IP público' : 'DNS público');
   $('badge').className = 'badge ' + (https ? 'ok' : 'warn');
   $('badge').textContent = https ? 'Conexão criptografada, certificado do ACM' : 'Conexão sem criptografia';
   $('note').textContent = https
@@ -138,8 +138,8 @@ PAGE
 sed -i -e "s|{{INSTANCE_ID}}|${INSTANCE_ID:--}|" -e "s|{{INSTANCE_TYPE}}|${INSTANCE_TYPE:--}|" \
   -e "s|{{AZ}}|${AZ:--}|" -e "s|{{REGION}}|${REGION:--}|" -e "s|{{BOOTED}}|$BOOTED|" "$SITE/index.html"
 
-# The package repositories need internet access. With an Elastic IP, the public address
-# can arrive a few seconds after the boot, so wait for it, for up to 5 minutes.
+# The package repositories need internet access. The public address can arrive a few
+# seconds after the boot, so wait for it, for up to 5 minutes.
 for _ in $(seq 1 60); do
   curl -s -o /dev/null -m 5 https://checkip.amazonaws.com && break
   sleep 5
