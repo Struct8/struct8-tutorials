@@ -1,23 +1,15 @@
-# Tutoriais do Struct8: o site da instância EC2
+# Tutoriais do Struct8
 
-Este repositório guarda o script de boot do terceiro tutorial da série Tutoriais do Struct8. O
-script publica um site na instância EC2 do desenho.
+Este repositório guarda os arquivos que os vídeos da série Tutoriais do Struct8 leem do GitHub,
+como o script de boot de uma instância EC2. Cada vídeo que usa um arquivo daqui tem uma pasta
+própria, com o nome do vídeo.
 
-## Como o desenho usa este repositório
+| Pasta | Vídeo | O que a pasta guarda |
+|---|---|---|
+| [`mudar-o-desenho-e-destruir`](mudar-o-desenho-e-destruir/) | Mudar o desenho e destruir | O script de boot que publica um site na instância EC2 |
 
-No diagrama do Struct8, o componente GitHub aponta para este repositório, e a instância EC2
-ligada a ele usa `user_data.sh` como user data. O campo User Data File Path da instância
-recebe o caminho do arquivo, e o Apply cria a instância com ele.
+## Como um desenho usa este repositório
 
-## O que o script faz
-
-- Lê do serviço de metadados da instância (IMDSv2) o ID, o tipo, a zona e a região.
-- Escreve a página do site com esses dados.
-- Instala o nginx e publica a página na porta 80. Se nenhum pacote puder ser instalado, o
-  servidor web do Python publica a página.
-
-**Importante:** o EC2 executa o user data só no primeiro boot. Para que uma mudança no script
-chegue à máquina, a instância precisa ser substituída: ligue User Data Replace On Change no
-formulário da instância.
-
-O registro da execução fica em `/var/log/cloud-init-output.log`, na instância.
+No diagrama do Struct8, o componente GitHub aponta para este repositório, e o recurso ligado a
+ele lê o arquivo pelo caminho a partir da raiz. Por exemplo, o campo User Data File Path da
+instância recebe `mudar-o-desenho-e-destruir/user_data.sh`.
